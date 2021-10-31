@@ -21,6 +21,30 @@ export const todosListSchema: FastifySchema = {
   }
 }
 
+export const todoGetSchema: FastifySchema = {
+  params: {
+    type: 'number',
+    required: ['id'],
+    properties: {
+      id: { type: 'number' },
+    }
+  },
+  response: {
+    [HTTP_STATUS_CODES.OK]: {
+      description: 'Todo item',
+      type: 'object',
+      properties: {
+        id: {
+          type: 'number',
+        },
+        title: {
+          type: "string"
+        },
+      },
+    }
+  }
+}
+
 export const todoCreateSchema: FastifySchema = {
   body: {
     type: 'object',
@@ -31,7 +55,7 @@ export const todoCreateSchema: FastifySchema = {
   },
   response: {
     [HTTP_STATUS_CODES.CREATED]: {
-      description: 'Todo create',
+      description: 'Created todo',
       type: 'object',
       properties: {
         id: {
