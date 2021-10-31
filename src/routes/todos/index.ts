@@ -1,0 +1,9 @@
+import { FastifyInstance, FastifyPluginAsync } from "fastify"
+import { routes } from '../../modules/todos'
+
+const index: FastifyPluginAsync = async (fastify: FastifyInstance, opts: Record<never, never>): Promise<void> => {
+  fastify.route(routes.todosListRoute(fastify))
+  fastify.route(routes.todosCreateRoute(fastify))
+}
+
+export default index;

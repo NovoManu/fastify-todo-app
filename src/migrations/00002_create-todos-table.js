@@ -1,7 +1,7 @@
 const createTodosTable = `
   CREATE TABLE todos (
       id      SERIAL PRIMARY KEY,
-      task    VARCHAR (255)
+      title    VARCHAR (255)
   );
 `
 

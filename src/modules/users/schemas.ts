@@ -35,7 +35,7 @@ export const userCreateSchema: FastifySchema = {
   },
   response: {
     [HTTP_STATUS_CODES.CREATED]: {
-      description: 'Users list',
+      description: 'User create',
       type: 'object',
       properties: {
         id: {
