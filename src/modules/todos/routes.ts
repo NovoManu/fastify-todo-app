@@ -29,10 +29,16 @@ export const todoGetRoute = (fastify: FastifyInstance): RouteOptions => {
     handler: async (request: FastifyRequest, reply: FastifyReply) => {
       const { id } = request.params as { id: string }
       const queryResult: QueryResult = await fastify.db().query(queries.get(id))
-      const [user]  = queryResult.rows
-      reply
-        .code(HTTP_STATUS_CODES.CREATED)
-        .send(user as Todo)
+      if (queryResult.rows.length) {
+        const [todo]  = queryResult.rows
+        reply
+          .code(HTTP_STATUS_CODES.OK)
+          .send(todo as Todo)
+      } else {
+        reply
+          .code(HTTP_STATUS_CODES.NOT_FOUND)
+          .send({ message: 'Todo not found' })
+      }
     }
   }
 }

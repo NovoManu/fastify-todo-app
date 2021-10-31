@@ -2,7 +2,7 @@ const resource = 'todos'
 
 const queries = {
   list: () => `SELECT * FROM ${resource}`,
-  get: (id: string) => `SELECT * FROM ${resource} WHERE id = $${id}`,
+  get: (id: string) => `SELECT * FROM ${resource} WHERE id = ${id}`,
   create: (payload: any) => {
     const names = Object.keys(payload)
     const values = Object.values(payload)

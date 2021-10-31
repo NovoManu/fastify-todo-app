@@ -23,7 +23,7 @@ export const todosListSchema: FastifySchema = {
 
 export const todoGetSchema: FastifySchema = {
   params: {
-    type: 'number',
+    type: 'object',
     required: ['id'],
     properties: {
       id: { type: 'number' },
