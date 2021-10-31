@@ -7,12 +7,20 @@ export const usersSchema: FastifySchema = {
       description: 'Users list',
       type: 'object',
       properties: {
-        name: {
-          type: 'string',
+        users: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              name: {
+                type: "string"
+              },
+              age: {
+                type: 'number'
+              }
+            },
+          },
         },
-        age: {
-          type: 'number',
-        }
       },
     }
   }
