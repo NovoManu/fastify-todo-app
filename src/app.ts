@@ -35,7 +35,6 @@ const app: FastifyPluginAsync<AppOptions> = async (
     await import('fastify-prettier'),
     {
       fallbackOnError: false,
-      alwaysOn: true,
     }
   )
   
