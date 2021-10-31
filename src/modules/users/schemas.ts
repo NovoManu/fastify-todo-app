@@ -9,6 +9,9 @@ export const usersListSchema: FastifySchema = {
       items: {
         type: 'object',
         properties: {
+          id: {
+            type: 'number',
+          },
           name: {
             type: "string"
           },
@@ -20,3 +23,35 @@ export const usersListSchema: FastifySchema = {
     }
   }
 }
+
+export const userCreateSchema: FastifySchema = {
+  body: {
+    type: 'object',
+    required: ['name', 'age'],
+    properties: {
+      name: { type: 'string' },
+      age: { type: 'number' },
+    }
+  },
+  response: {
+    [HTTP_STATUS_CODES.CREATED]: {
+      description: 'Users list',
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'number',
+          },
+          name: {
+            type: "string"
+          },
+          age: {
+            type: 'number'
+          }
+        },
+      },
+    }
+  }
+}
+
