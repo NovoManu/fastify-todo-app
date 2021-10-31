@@ -2,8 +2,6 @@ import { join } from 'path';
 import AutoLoad, {AutoloadPluginOptions} from 'fastify-autoload';
 import { FastifyPluginAsync } from 'fastify';
 import { setGracefulServer } from './gracefulServer';
-// @ts-ignore
-import fastifyPrettier from 'fastify-prettier'
 
 export type AppOptions = {
   // Place your custom options for app below here.
@@ -33,12 +31,16 @@ const app: FastifyPluginAsync<AppOptions> = async (
   })
   
   void fastify.register(
-    fastifyPrettier,
+    // @ts-ignore
+    await import('fastify-prettier'),
     {
       fallbackOnError: false,
       alwaysOn: true,
     }
   )
+  
+  // @ts-ignore
+  void fastify.register(await import('fastify-request-timing'))
   
   void setGracefulServer(fastify)
 };
