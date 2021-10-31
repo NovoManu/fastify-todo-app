@@ -1,7 +1,7 @@
 import GracefulServer from '@gquittet/graceful-server';
 import { FastifyInstance } from 'fastify'
 
-export const setGracefulServer = (fastify: FastifyInstance) => {
+export const setGracefulServer = (fastify: FastifyInstance): void => {
   const gracefulServer = GracefulServer(fastify.server)
   
   gracefulServer.on(GracefulServer.READY, () => {
