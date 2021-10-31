@@ -1,10 +1,10 @@
 import fp from 'fastify-plugin'
-// import { join } from 'path'
-// const postgresMigrations = require('postgres-migrations')
+const postgresMigrations = require('postgres-migrations')
 import { Pool } from 'pg'
 import { host, database, port, user, password } from '../config/config'
+import { FastifyInstance } from 'fastify'
 
-// const migrationsPath = join(__dirname, 'migrations')
+const migrationsPath = 'src/migrations'
 
 const pool = new Pool({
   host,
@@ -14,17 +14,20 @@ const pool = new Pool({
   password
 })
 
-// const migrate = async (client: Pool, path: string) => {
-//   try {
-//     await postgresMigrations.migrate({ client }, path)
-//   } catch (e) {
-//     console.log(e)
-//   }
-// }
-//
-// migrate(pool, migrationsPath).then()
+const migrate = async (client: Pool, path: string) => {
+  try {
+    await postgresMigrations.migrate({ client }, path)
+  } catch (e) {
+    console.log({
+      message: 'Could not apply migrations',
+      error: e,
+    })
+  }
+}
 
-export default fp(async (fastify, opts) => {
+migrate(pool, migrationsPath).then()
+
+export default fp(async (fastify:FastifyInstance) => {
   fastify.decorate('db', () => {
     return pool
   })
