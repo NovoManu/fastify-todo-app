@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
+      POSTGRES_PASSWORD: psql
+    ports:
+      - "5432:5432"
+
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: npm run dev
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
