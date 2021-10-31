@@ -36,19 +36,16 @@ export const userCreateSchema: FastifySchema = {
   response: {
     [HTTP_STATUS_CODES.CREATED]: {
       description: 'Users list',
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          id: {
-            type: 'number',
-          },
-          name: {
-            type: "string"
-          },
-          age: {
-            type: 'number'
-          }
+      type: 'object',
+      properties: {
+        id: {
+          type: 'number',
+        },
+        name: {
+          type: "string"
+        },
+        age: {
+          type: 'number'
         },
       },
     }

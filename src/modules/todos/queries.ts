@@ -1,10 +1,9 @@
-import { User } from './types'
-
-const resource = 'users'
+const resource = 'todos'
 
 const queries = {
   list: () => `SELECT * FROM ${resource}`,
-  create: (payload: User) => {
+  get: (id: string) => `SELECT * FROM ${resource} WHERE id = $${id}`,
+  create: (payload: any) => {
     const names = Object.keys(payload)
     const values = Object.values(payload)
     const keys = names.map((_, i) => `$${++i}`).join(', ')
