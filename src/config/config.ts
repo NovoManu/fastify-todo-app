@@ -5,4 +5,8 @@ const loadEnvVariables = (name: string): string => {
   return env
 }
 
-module.exports = {}
+export const host: string = loadEnvVariables('DB_HOST')
+export const port: number = Number(loadEnvVariables('DB_PORT'))
+export const database: string = loadEnvVariables('DB_NAME')
+export const user: string = loadEnvVariables('DB_USER')
+export const password: string = loadEnvVariables('DB_PASSWORD')

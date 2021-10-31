@@ -1,27 +1,8 @@
-import { FastifyPluginAsync, FastifyReply, FastifyRequest } from "fastify"
-import { usersSchema } from './schemas'
-import { HTTP_METHODS } from '../../utils/enums/HTTP_METHODS'
+import { FastifyInstance, FastifyPluginAsync } from "fastify"
+import { usersRoute } from '../../modules/users'
 
-const users: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
-  fastify.route({
-    method: HTTP_METHODS.GET,
-    url: '/',
-    schema: usersSchema,
-    handler: (request: FastifyRequest, reply: FastifyReply) => {
-      reply
-        .type('application/json')
-        .send([
-          {
-            name: 'Manu',
-            age: 40,
-          },
-          {
-            name: 'Petr',
-            age: 34,
-          },
-        ])
-    }
-  })
+const users: FastifyPluginAsync = async (fastify: FastifyInstance, opts: Record<never, never>): Promise<void> => {
+  fastify.route(usersRoute)
 }
 
 export default users;
