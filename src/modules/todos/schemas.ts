@@ -69,3 +69,34 @@ export const todoCreateSchema: FastifySchema = {
   }
 }
 
+export const todoUpdateSchema: FastifySchema = {
+  params: {
+    type: 'object',
+    required: ['id'],
+    properties: {
+      id: { type: 'number' },
+    }
+  },
+  body: {
+    type: 'object',
+    required: ['title'],
+    properties: {
+      title: { type: 'string' },
+    }
+  },
+  response: {
+    [HTTP_STATUS_CODES.CREATED]: {
+      description: 'Updated todo',
+      type: 'object',
+      properties: {
+        id: {
+          type: 'number',
+        },
+        title: {
+          type: "string"
+        },
+      },
+    }
+  }
+}
+

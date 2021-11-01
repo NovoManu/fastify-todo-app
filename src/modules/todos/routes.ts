@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest, RouteOptions } from 'fastify'
 import { HTTP_METHODS } from '../../utils/enums/HTTP_METHODS'
 import { HTTP_STATUS_CODES } from '../../utils/enums/HTTP_STATUS_CODES'
-import { todosListSchema, todoGetSchema, todoCreateSchema } from './schemas'
+import { todosListSchema, todoGetSchema, todoCreateSchema, todoUpdateSchema } from './schemas'
 import queries from './queries'
 import { QueryResult } from 'pg'
 import { Todo } from './types'
@@ -55,6 +55,30 @@ export const todosCreateRoute = (fastify: FastifyInstance): RouteOptions => {
       reply
         .code(HTTP_STATUS_CODES.CREATED)
         .send(user as Todo)
+    }
+  }
+}
+
+export const todosUpdateRoute = (fastify: FastifyInstance): RouteOptions => {
+  return {
+    method: HTTP_METHODS.PUT,
+    url: '/:id/update',
+    schema: todoUpdateSchema,
+    handler: async (request: FastifyRequest, reply: FastifyReply) => {
+      const { id } = request.params as { id: string }
+      const queryResult: QueryResult = await fastify.db().query(queries.get(id))
+      if (queryResult.rows.length) {
+        const todo = request.body as Todo
+        const queryResult: QueryResult = await fastify.db().query(queries.update(todo))
+        const [user]  = queryResult.rows
+        reply
+          .code(HTTP_STATUS_CODES.OK)
+          .send(user as Todo)
+      } else {
+        reply
+          .code(HTTP_STATUS_CODES.NOT_FOUND)
+          .send({ message: 'Todo not found' })
+      }
     }
   }
 }
