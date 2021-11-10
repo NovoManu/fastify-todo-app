@@ -28,6 +28,22 @@ const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
       reply.send({ root: true })
     }
   })
+  
+  const modules = '../modules'
+  
+  const normalizedPath = require("path").join(__dirname, modules);
+  
+  require("fs").readdirSync(normalizedPath).forEach((file: string) => {
+    const module = require(`${modules}/${file}`)
+    Object.values(module.routes).forEach((controller: any) => {
+      const route = controller(fastify)
+      if (!route.url.startsWith('/')) {
+        route.url = `/${route.url}`
+      }
+      route.url = `/${file}${route.url}`
+      fastify.route(route)
+    })
+  });
 }
 
 export default root;
